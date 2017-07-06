@@ -5,11 +5,11 @@ class Person < ActiveRecord::Base
   has_many :employees, class_name: "Person", foreign_key: :manager_id
 
   def self.in_region(region)
-    Person.joins(:location).merge(Location.in_region(region))
+    joins(:location).merge(Location.in_region(region))
   end
 
   def self.alphabetically_by_region_and_location
-    Person.joins(location: :region).merge(Region.order(:name)).order(:name) #order by region then location
+    joins(:location).merge(Location.by_region_and_location_name).order(:name)#order by region then location
   end
 end
 
